@@ -101,11 +101,15 @@ Parameters:
     Label:
       en: VSwitch ID
       zh-cn: 交换机实例ID
-    Default: ''
     AssociationProperty: 'ALIYUN::ECS::VSwitch::VSwitchId'
     AssociationPropertyMetadata:
       VpcId: VpcId
       ZoneId: ZoneId
+  AdminPassword:
+    Type: String
+    AssociationProperty: ALIYUN::ECS::Instance::Password
+    Label: 管理员密码
+    NoEcho: True
 Resources:
   SecurityGroup:
     Type: ALIYUN::ECS::SecurityGroup
@@ -115,11 +119,6 @@ Resources:
       VpcId:
         Ref: VpcId
       SecurityGroupIngress:
-        - PortRange: 8080/8080
-          Priority: 1
-          SourceCidrIp: 0.0.0.0/0
-          IpProtocol: tcp
-          NicType: internet
   InstanceGroup:
     Type: ALIYUN::ECS::InstanceGroup
     Properties:
@@ -165,8 +164,8 @@ Resources:
             # 源代码通过computenest-cli被打包为tar.gz包，并发布为部署物
             wget '{{ computenest::file::mengjunwei-mjw_springboot-ecs-sourcecode-demo }}' -O mengjunwei-mjw_springboot-ecs-sourcecode-demo.tar.gz > /var/log/download.log
             tar -zxvf mengjunwei-mjw_springboot-ecs-sourcecode-demo.tar.gz && cd "$(tar -tzf mengjunwei-mjw_springboot-ecs-sourcecode-demo.tar.gz | head -1 | awk -F'/' '{print $1}')"
-            chmod +x deploy.sh
-            ./deploy.sh
+            echo "start run command"
+            echo "${AdminPassword}"
 
             ARGUS_VERSION=3.5.7 /bin/bash -c "$(curl -sS https://cms-agent-${RegionId}.oss-${RegionId}-internal.aliyuncs.com/Argus/agent_install_ecs-1.7.sh)" >> /root/install_cms_agent.log 2>&1
           - RegionId:
@@ -178,7 +177,7 @@ Outputs:
       zh-cn: 访问页面。
     Value:
       Fn::Sub:
-        - 'http://${ServerAddress}:8080'
+        - 
         - ServerAddress:
             Fn::Select:
             - 0
@@ -205,4 +204,9 @@ Metadata:
           - VSwitchId
         Label:
           default: 可用区配置
+      - Parameters:
+          - AdminPassword
+        Label:
+          en: Software Configuration
+          zh-cn: 软件配置
       
