@@ -229,7 +229,7 @@ Resources:
           - Ref: EcsVpc
           - Ref: VpcId
       SecurityGroupIngress:
-        - PortRange: 8080/8080
+        - PortRange: 80/80
           Priority: 1
           SourceCidrIp: 0.0.0.0/0
           IpProtocol: tcp
@@ -258,7 +258,7 @@ Resources:
         Ref: ZoneId
       SecurityGroupId:
         Ref: SecurityGroup
-      ImageId: centos_7_9_x64_20G_alibase_20230613.vhd
+      ImageId: aliyun/services/ecs/images/linux/ubuntu-latest/ubuntu_22_04_x64
       Password:
         Ref: InstancePassword
       InstanceType:
@@ -298,7 +298,7 @@ Outputs:
       zh-cn: 访问页面。
     Value:
       Fn::Sub:
-        - http://${ServerAddress}:8080
+        - http://${ServerAddress}:80
         - ServerAddress:
             Fn::Select:
             - 0
