@@ -258,7 +258,7 @@ Resources:
         Ref: ZoneId
       SecurityGroupId:
         Ref: SecurityGroup
-      ImageId: \"{{resolve:oos:aliyun/services/ecs/images/linux/centos-latest/centos_7_9_x64}}\"
+      ImageId: "{{resolve:oos:aliyun/services/computenest/images/aliyun_3_2104_docker_26}}"
       Password:
         Ref: InstancePassword
       InstanceType:
