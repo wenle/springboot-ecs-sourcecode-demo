@@ -229,6 +229,11 @@ Resources:
           - Ref: EcsVpc
           - Ref: VpcId
       SecurityGroupIngress:
+        - PortRange: 80/80
+          Priority: 1
+          SourceCidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          NicType: internet
         - PortRange: 8080/8080
           Priority: 1
           SourceCidrIp: 0.0.0.0/0
@@ -258,7 +263,7 @@ Resources:
         Ref: ZoneId
       SecurityGroupId:
         Ref: SecurityGroup
-      ImageId: "{{resolve:oos:aliyun/services/computenest/images/aliyun_3_2104_docker_26}}"
+      ImageId: "{{resolve:oos:aliyun/services/computenest/images/aliyun_3_2104_python_3_11}}"
       Password:
         Ref: InstancePassword
       InstanceType:
@@ -287,6 +292,9 @@ Resources:
             tar -zxvf mengjunwei-mjw_springboot-ecs-sourcecode-demo.tar.gz && cd "$(tar -tzf mengjunwei-mjw_springboot-ecs-sourcecode-demo.tar.gz | head -1 | awk -F'/' '{print $1}')"
             echo "start run command"
             echo "${!AdminPassword}"
+            
+            chmod +x deploy.sh
+            ./deploy.sh
 
             ARGUS_VERSION=3.5.7 /bin/bash -c "$(curl -sS https://cms-agent-${RegionId}.oss-${RegionId}-internal.aliyuncs.com/Argus/agent_install_ecs-1.7.sh)" >> /root/install_cms_agent.log 2>&1
           - RegionId:
