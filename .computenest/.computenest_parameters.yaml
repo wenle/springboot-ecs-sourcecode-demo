@@ -1,0 +1,19 @@
+SecurityGroupPorts:
+- '8080'
+ServicePorts:
+- '8080'
+ServiceType: private
+ArtifactSourceType: Buildpacks
+ServiceBuildRegion: ap-southeast-1
+RepoName: wenle/springboot-ecs-sourcecode-demo
+RegionId: cn-hangzhou
+CustomParameters:
+- NoEcho: false
+  Type: String
+  AllowedPattern: ''
+  Label: 环境变量
+  ConstraintDescription: ''
+  Name: ENV1
+Owner: wenle
+Branch: main
+Platform: github
