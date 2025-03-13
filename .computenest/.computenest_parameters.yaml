@@ -1,0 +1,15 @@
+SecurityGroupPorts:
+- 8080
+RuntimeType: Container
+ServicePorts:
+- 8080
+ServiceType: private
+ArtifactSourceType: Buildpacks
+RepoName: wenle/springboot-ecs-sourcecode-demo
+ServiceBuildRegion: ap-southeast-1
+RegionId: cn-hangzhou
+CustomParameters:
+- MyKey: MyValue
+Owner: wenle
+Branch: main
+Platform: github
